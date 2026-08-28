@@ -897,6 +897,18 @@ def login_admin():
 @app.route('/api/admin/stats', methods=['GET'])
 @require_admin
 def admin_stats():
+    category_counts = {
+        category: tickets_collection.count_documents({'category': category})
+        for category in ('wifi', 'login', 'software', 'printer', 'hardware', 'other')
+    }
+    status_counts = {
+        status: tickets_collection.count_documents({'status': status})
+        for status in ('open', 'assigned', 'in_progress', 'waiting_for_user', 'resolved', 'closed')
+    }
+    priority_counts = {
+        priority: tickets_collection.count_documents({'priority': priority})
+        for priority in ('low', 'medium', 'high', 'critical')
+    }
     return jsonify({
         'total_users': users_collection.count_documents({}),
         'students': users_collection.count_documents({'usertype': 'student'}),
@@ -905,7 +917,13 @@ def admin_stats():
         'open': tickets_collection.count_documents({'status': {'$in': ['open', 'assigned']}}),
         'in_progress': tickets_collection.count_documents({'status': 'in_progress'}),
         'resolved': tickets_collection.count_documents({'status': {'$in': ['resolved', 'closed']}}),
-        'high_priority': tickets_collection.count_documents({'priority': {'$in': ['high', 'critical']}})
+        'high_priority': tickets_collection.count_documents({'priority': {'$in': ['high', 'critical']}}),
+        'total_conversations': conversations_collection.count_documents({}),
+        'human_escalations': tickets_collection.count_documents({'conversation_id': {'$ne': None}}),
+        'ai_resolution_rate': None,
+        'category_counts': category_counts,
+        'status_counts': status_counts,
+        'priority_counts': priority_counts
     }), 200
 
 @app.route('/api/admin/tickets', methods=['GET'])
