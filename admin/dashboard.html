@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CampusFix AI | Admin Dashboard</title>
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin-page">
+  <header class="admin-header"><a class="admin-brand" href="../index.html">CampusFix AI</a><span>IT Admin Portal</span><strong id="adminNameDisplay"></strong><button id="adminLogout" class="admin-link">Logout</button></header>
+  <main class="admin-dashboard">
+    <section class="admin-stats" id="adminStats"></section>
+    <section class="admin-panel">
+      <div class="admin-toolbar"><h1>Tickets</h1><input id="ticketSearch" placeholder="Search ticket, user, or issue"></div>
+      <div class="admin-table-wrap"><table><thead><tr><th>Ticket ID</th><th>User</th><th>Issue</th><th>Category</th><th>Priority</th><th>Team</th><th>Status</th><th>Created</th><th>Action</th></tr></thead><tbody id="ticketRows"></tbody></table></div>
+    </section>
+    <section class="admin-panel"><div class="admin-toolbar"><h1>Users</h1></div><div class="admin-table-wrap"><table><thead><tr><th>Name</th><th>User Type</th><th>Identifier</th><th>Email</th><th>Department</th></tr></thead><tbody id="userRows"></tbody></table></div></section>
+    <section class="admin-panel" id="ticketDetail" hidden></section>
+  </main>
+  <script src="admin.js?v=20260828"></script>
+</body>
+</html>

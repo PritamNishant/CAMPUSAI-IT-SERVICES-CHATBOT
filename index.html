@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusFix AI - Your Campus IT Support Assistant</title>
+    <meta name="description" content="CampusFix AI helps students and faculty diagnose common IT problems, find trusted solutions, and get support when an issue needs human assistance.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/landing.css">
+    <link rel="stylesheet" href="css/chatbot.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <img src="assets/logo.svg" alt="CampusFix AI Logo" class="nav-logo">
+                <span class="nav-brand-text">CampusFix AI</span>
+            </div>
+            
+            <div class="nav-links" id="navLinks">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#how-it-works" class="nav-link">How It Works</a>
+                <a href="#" class="nav-link" onclick="openChatbot(); return false;">IT Support</a>
+                <a href="#faq" class="nav-link">FAQ</a>
+            </div>
+            
+            <div class="nav-actions">
+                <button class="nav-btn-secondary" onclick="openAuthModal()">Sign In</button>
+                <button class="nav-btn-primary" onclick="openChatbot()">Get Support</button>
+            </div>
+            
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-background">
+            <div class="tech-grid"></div>
+            <div class="particles" id="particles"></div>
+            <div class="glow-orb glow-orb-1"></div>
+            <div class="glow-orb glow-orb-2"></div>
+        </div>
+        
+        <div class="container hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Your Campus <span class="text-gradient">IT Problems</span>, 
+                    Solved <span class="text-gradient">Smarter</span>.
+                </h1>
+                <p class="hero-description">
+                    CampusFix AI helps students and faculty diagnose common IT problems, 
+                    find trusted solutions, and get support when an issue needs human assistance.
+                </p>
+                <div class="hero-actions">
+                    <button class="btn-primary btn-lg" onclick="openChatbot()">
+                        Start IT Support 
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <button class="btn-secondary btn-lg" onclick="document.getElementById('how-it-works').scrollIntoView({behavior: 'smooth'})">
+                        See How It Works
+                    </button>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-label">Intelligent Diagnosis</div>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-label">Instant Support</div>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="fas fa-ticket-alt"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-label">Smart Ticketing</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="chat-preview">
+                    <div class="chat-preview-header">
+                        <div class="chat-preview-avatar">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="chat-preview-info">
+                            <div class="chat-preview-name">Fixie</div>
+                            <div class="chat-preview-status">
+                                <span class="status-dot"></span>
+                                Online
+                            </div>
+                        </div>
+                        <div class="ai-badge">
+                            <i class="fas fa-brain"></i>
+                            AI
+                        </div>
+                    </div>
+                    <div class="chat-preview-messages">
+                        <div class="preview-message user-message">
+                            <div class="message-bubble">
+                                My campus Wi-Fi isn't working.
+                            </div>
+                        </div>
+                        <div class="preview-message bot-message">
+                            <div class="message-bubble">
+                                I can help you troubleshoot that. Are other devices able to connect to the same network?
+                            </div>
+                        </div>
+                        <div class="typing-indicator-preview">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="floating-elements">
+                    <div class="floating-chip chip-1">
+                        <i class="fas fa-wifi"></i>
+                        <span>Network Check</span>
+                    </div>
+                    <div class="floating-chip chip-2">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Secure</span>
+                    </div>
+                    <div class="floating-chip chip-3">
+                        <i class="fas fa-clock"></i>
+                        <span>24/7 Available</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Supported IT Problems -->
+    <section class="problems-section" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">What can <span class="text-gradient">CampusFix</span> help with?</h2>
+                <p class="section-subtitle">Get instant support for common campus IT issues</p>
+            </div>
+            
+            <div class="problems-grid">
+                <div class="problem-card">
+                    <div class="problem-icon">
+                        <i class="fas fa-wifi"></i>
+                    </div>
+                    <h3 class="problem-title">Wi-Fi Problems</h3>
+                    <p class="problem-description">Troubleshoot campus network and connectivity issues</p>
+                </div>
+                
+                <div class="problem-card">
+                    <div class="problem-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3 class="problem-title">Login & Password</h3>
+                    <p class="problem-description">Reset passwords and resolve authentication issues</p>
+                </div>
+                
+                <div class="problem-card">
+                    <div class="problem-icon">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <h3 class="problem-title">Software Issues</h3>
+                    <p class="problem-description">Get help with software installation and configuration</p>
+                </div>
+                
+                <div class="problem-card">
+                    <div class="problem-icon">
+                        <i class="fas fa-print"></i>
+                    </div>
+                    <h3 class="problem-title">Printer Problems</h3>
+                    <p class="problem-description">Resolve campus printing and scanning issues</p>
+                </div>
+                
+                <div class="problem-card">
+                    <div class="problem-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <h3 class="problem-title">Network Connectivity</h3>
+                    <p class="problem-description">Fix ethernet and VPN connection problems</p>
+                </div>
+                
+                <div class="problem-card">
+                    <div class="problem-icon">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <h3 class="problem-title">System Configuration</h3>
+                    <p class="problem-description">Configure campus systems and applications</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why CampusFix AI -->
+    <section class="why-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">More than <span class="text-gradient">just a chatbot</span>.</h2>
+                <p class="section-subtitle">Intelligent IT support powered by advanced AI</p>
+            </div>
+            
+            <div class="why-grid">
+                <div class="why-card">
+                    <div class="why-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="why-title">Intelligent Diagnosis</h3>
+                    <p class="why-description">Understands your problem and asks relevant follow-up questions to identify the root cause</p>
+                </div>
+                
+                <div class="why-card">
+                    <div class="why-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3 class="why-title">Knowledge-Based Answers</h3>
+                    <p class="why-description">Uses trusted IT documentation and troubleshooting information from your campus</p>
+                </div>
+                
+                <div class="why-card">
+                    <div class="why-icon">
+                        <i class="fas fa-list-check"></i>
+                    </div>
+                    <h3 class="why-title">Guided Troubleshooting</h3>
+                    <p class="why-description">Provides structured, step-by-step troubleshooting guidance to resolve your issue</p>
+                </div>
+                
+                <div class="why-card">
+                    <div class="why-icon">
+                        <i class="fas fa-ticket-alt"></i>
+                    </div>
+                    <h3 class="why-title">Smart Ticketing</h3>
+                    <p class="why-description">Creates a support ticket when the issue cannot be resolved automatically</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="workflow-section" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How <span class="text-gradient">CampusFix AI</span> Works</h2>
+                <p class="section-subtitle">Six simple steps from problem to solution</p>
+            </div>
+            
+            <div class="workflow-timeline">
+                <div class="workflow-step">
+                    <div class="step-number">01</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Tell Us</h3>
+                        <p class="step-description">Describe your IT problem naturally in your own words</p>
+                    </div>
+                    <div class="step-icon">
+                        <i class="fas fa-comment-dots"></i>
+                    </div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="step-number">02</div>
+                    <div class="step-content">
+                        <h3 class="step-title">AI Diagnoses</h3>
+                        <p class="step-description">Fixie asks relevant diagnostic questions to understand the issue</p>
+                    </div>
+                    <div class="step-icon">
+                        <i class="fas fa-stethoscope"></i>
+                    </div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="step-number">03</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Find the Solution</h3>
+                        <p class="step-description">The system searches relevant IT knowledge and documentation</p>
+                    </div>
+                    <div class="step-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="step-number">04</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Troubleshoot</h3>
+                        <p class="step-description">You receive guided troubleshooting steps tailored to your problem</p>
+                    </div>
+                    <div class="step-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="step-number">05</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Check the Result</h3>
+                        <p class="step-description">The agent checks whether your issue has been resolved</p>
+                    </div>
+                    <div class="step-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="step-number">06</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Get Human Support</h3>
+                        <p class="step-description">If unresolved, a support ticket is created and routed to IT</p>
+                    </div>
+                    <div class="step-icon">
+                        <i class="fas fa-user-headset"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Chatbot Demo -->
+    <section class="chatbot-demo-section" id="chatbot-demo" style="display: none;">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">See <span class="text-gradient">CampusFix AI</span> in Action</h2>
+                <p class="section-subtitle">Try our intelligent IT support assistant</p>
+            </div>
+            
+            <div class="chatbot-container" id="chatbotContainer">
+                <!-- Workflow Progress Indicator -->
+                <div class="workflow-progress" id="workflowProgress" style="display: none;">
+                    <div class="progress-step" data-stage="tell_us">
+                        <div class="progress-icon"><i class="fas fa-comment-dots"></i></div>
+                        <div class="progress-label">Tell Us</div>
+                    </div>
+                    <div class="progress-step" data-stage="ai_diagnoses">
+                        <div class="progress-icon"><i class="fas fa-stethoscope"></i></div>
+                        <div class="progress-label">AI Diagnoses</div>
+                    </div>
+                    <div class="progress-step" data-stage="find_solution">
+                        <div class="progress-icon"><i class="fas fa-search"></i></div>
+                        <div class="progress-label">Find Solution</div>
+                    </div>
+                    <div class="progress-step" data-stage="troubleshoot">
+                        <div class="progress-icon"><i class="fas fa-tools"></i></div>
+                        <div class="progress-label">Troubleshoot</div>
+                    </div>
+                    <div class="progress-step" data-stage="check_result">
+                        <div class="progress-icon"><i class="fas fa-check-circle"></i></div>
+                        <div class="progress-label">Check Result</div>
+                    </div>
+                    <div class="progress-step" data-stage="human_support">
+                        <div class="progress-icon"><i class="fas fa-user-headset"></i></div>
+                        <div class="progress-label">Human Support</div>
+                    </div>
+                </div>
+                
+                <div class="chatbot-header">
+                    <div class="chatbot-header-left">
+                        <div class="chatbot-avatar">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="chatbot-info">
+                            <div class="chatbot-name">Fixie</div>
+                            <div class="chatbot-status">
+                                <span class="status-dot"></span>
+                                Online - Ready to Help
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chatbot-header-right">
+                        <button class="chatbot-action-btn" onclick="resetConversation()" title="Reset conversation">
+                            <i class="fas fa-redo"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="chatbot-messages" id="chatbotMessages">
+                    <div class="welcome-message">
+                        <div class="welcome-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3>Hello! I'm Fixie, your campus IT assistant.</h3>
+                        <p>I'm here to help you troubleshoot IT problems. What issue are you experiencing?</p>
+                        <div class="quick-issues">
+                            <button class="quick-issue-btn" onclick="sendQuickMessage('My Wi-Fi is not working')">
+                                <i class="fas fa-wifi"></i>
+                                Wi-Fi Issues
+                            </button>
+                            <button class="quick-issue-btn" onclick="sendQuickMessage('I cannot login to my account')">
+                                <i class="fas fa-lock"></i>
+                                Login Problems
+                            </button>
+                            <button class="quick-issue-btn" onclick="sendQuickMessage('I need help installing software')">
+                                <i class="fas fa-download"></i>
+                                Software Help
+                            </button>
+                            <button class="quick-issue-btn" onclick="sendQuickMessage('The printer is not working')">
+                                <i class="fas fa-print"></i>
+                                Printer Issues
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="typing-indicator" id="typingIndicator">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <span class="typing-text">Fixie is thinking...</span>
+                </div>
+                
+                <div class="chatbot-input-container">
+                    <form class="chatbot-input-form" id="chatbotForm">
+                        <textarea 
+                            class="chatbot-input" 
+                            id="chatbotInput" 
+                            placeholder="Describe your IT problem..." 
+                            rows="1"
+                        ></textarea>
+                        <button type="submit" class="chatbot-send-btn" id="chatbotSendBtn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                    <div class="input-hint">
+                        Press <kbd>Enter</kbd> to send, <kbd>Shift + Enter</kbd> for new line
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- My Tickets -->
+    <section class="my-tickets-section" id="my-tickets" style="display: none;">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">My <span class="text-gradient">Support Tickets</span></h2>
+                <p class="section-subtitle">Track updates from the Campus IT Support Team</p>
+            </div>
+            <div id="myTicketsList" class="my-tickets-list"></div>
+        </div>
+    </section>
+
+    <!-- Smart Ticketing -->
+    <section class="ticketing-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">When AI can't solve it, your <span class="text-gradient">ticket keeps moving</span>.</h2>
+                <p class="section-subtitle">Seamless escalation to human IT support</p>
+            </div>
+            
+            <div class="ticketing-content">
+                <div class="ticketing-flow">
+                    <div class="flow-step">
+                        <div class="flow-icon">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                        <div class="flow-label">Problem Reported</div>
+                    </div>
+                    <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+                    
+                    <div class="flow-step">
+                        <div class="flow-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="flow-label">AI Diagnosis</div>
+                    </div>
+                    <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+                    
+                    <div class="flow-step">
+                        <div class="flow-icon">
+                            <i class="fas fa-wrench"></i>
+                        </div>
+                        <div class="flow-label">Troubleshooting</div>
+                    </div>
+                    <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+                    
+                    <div class="flow-step highlight">
+                        <div class="flow-icon">
+                            <i class="fas fa-ticket-alt"></i>
+                        </div>
+                        <div class="flow-label">Ticket Created</div>
+                    </div>
+                    <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+                    
+                    <div class="flow-step">
+                        <div class="flow-icon">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="flow-label">IT Team Assigned</div>
+                    </div>
+                    <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+                    
+                    <div class="flow-step success">
+                        <div class="flow-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="flow-label">Issue Resolved</div>
+                    </div>
+                </div>
+                
+                <div class="sample-ticket">
+                    <div class="ticket-header">
+                        <h4>Sample Ticket</h4>
+                        <span class="ticket-status status-assigned">Assigned</span>
+                    </div>
+                    <div class="ticket-body">
+                        <div class="ticket-field">
+                            <span class="field-label">Ticket ID:</span>
+                            <span class="field-value">IT-2026-00421</span>
+                        </div>
+                        <div class="ticket-field">
+                            <span class="field-label">Category:</span>
+                            <span class="field-value">Network Support</span>
+                        </div>
+                        <div class="ticket-field">
+                            <span class="field-label">Priority:</span>
+                            <span class="field-value priority-high">High</span>
+                        </div>
+                        <div class="ticket-field">
+                            <span class="field-label">Issue:</span>
+                            <span class="field-value">Campus Wi-Fi Connection Failure</span>
+                        </div>
+                        <div class="ticket-field">
+                            <span class="field-label">Assigned To:</span>
+                            <span class="field-value">Network Support Team</span>
+                        </div>
+                        <div class="ticket-field">
+                            <span class="field-label">AI Summary:</span>
+                            <span class="field-value">User unable to connect to campus Wi-Fi. Other devices also affected. Issue isolated to Building C, Floor 3.</span>
+                        </div>
+                    </div>
+                    <div class="ticket-footer">
+                        <button class="btn-secondary-sm">View Full Ticket</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust & Safety -->
+    <section class="trust-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Support you can <span class="text-gradient">trust</span>.</h2>
+                <p class="section-subtitle">Reliable, safe, and verified IT guidance</p>
+            </div>
+            
+            <div class="trust-grid">
+                <div class="trust-card">
+                    <div class="trust-icon">
+                        <i class="fas fa-check-double"></i>
+                    </div>
+                    <h3 class="trust-title">Verified Guidance</h3>
+                    <p class="trust-description">All solutions come from approved campus IT documentation and trusted knowledge sources</p>
+                </div>
+                
+                <div class="trust-card">
+                    <div class="trust-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="trust-title">Safe Troubleshooting</h3>
+                    <p class="trust-description">Avoids unsafe system or network changes that could harm your device or data</p>
+                </div>
+                
+                <div class="trust-card">
+                    <div class="trust-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <h3 class="trust-title">Campus-Specific Knowledge</h3>
+                    <p class="trust-description">Uses your university's IT documentation, policies, and procedures</p>
+                </div>
+            </div>
+            
+            <div class="trust-note">
+                <i class="fas fa-info-circle"></i>
+                CampusFix AI is designed for first-level support. Complex issues may require assistance from university IT staff.
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="benefits-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Built for <span class="text-gradient">everyone</span> on campus.</h2>
+            </div>
+            
+            <div class="benefits-grid">
+                <div class="benefits-column">
+                    <div class="benefits-header">
+                        <div class="benefits-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <h3>For Students & Faculty</h3>
+                    </div>
+                    <ul class="benefits-list">
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span>Get faster first-level IT support</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span>Receive guided troubleshooting steps</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span>Easy ticket creation when needed</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span>Track your support requests</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span>24/7 availability for common issues</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="benefits-column">
+                    <div class="benefits-header">
+                        <div class="benefits-icon">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <h3>For IT Teams</h3>
+                    </div>
+                    <ul class="benefits-list">
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span>Reduce repetitive support requests</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span>Better issue categorization</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span>Structured tickets with context</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span>Easier escalation workflow</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span>Focus on complex problems</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section" id="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Frequently Asked <span class="text-gradient">Questions</span></h2>
+                <p class="section-subtitle">Everything you need to know about CampusFix AI</p>
+            </div>
+            
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What problems can CampusFix AI help with?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>CampusFix AI can help with common campus IT issues including Wi-Fi connectivity problems, login and password issues, software installation and configuration, printer problems, network connectivity, and basic system configuration. For complex or specialized issues, the system will create a support ticket for your campus IT team.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Can CampusFix create an IT ticket?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes! If CampusFix AI cannot resolve your issue through troubleshooting, it will help you create a detailed support ticket. The ticket includes all the diagnostic information gathered during your conversation, making it easier for IT staff to assist you.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Can I track my ticket?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Absolutely. When a ticket is created, you'll receive a ticket ID that you can use to track the status of your request. You'll be notified of updates and can communicate with IT staff through the ticketing system.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What happens if the AI cannot solve my problem?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>If CampusFix AI cannot resolve your issue, it will guide you through creating a support ticket. The ticket is automatically categorized and assigned to the appropriate IT team based on your problem. All the information from your conversation with Fixie is included to help IT staff understand your issue faster.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Can CampusFix provide university-specific solutions?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes. CampusFix AI is designed to use your university's specific IT documentation, policies, and procedures. This means the solutions you receive are tailored to your campus infrastructure and IT guidelines.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Who can use CampusFix AI?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>CampusFix AI is available to all students, faculty, and staff members of the university. Simply click "Get Support" to start getting help with your IT issues.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta-section">
+        <div class="container">
+            <div class="final-cta-content">
+                <h2 class="final-cta-title">Having an <span class="text-gradient">IT problem</span>?</h2>
+                <p class="final-cta-subtitle">Let CampusFix AI help you find the solution.</p>
+                <button class="btn-primary btn-xl" onclick="openChatbot()">
+                    Start IT Support 
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <p class="final-cta-note">Available for students and faculty</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="assets/logo.svg" alt="CampusFix AI Logo" class="footer-logo">
+                    <span class="footer-brand-text">CampusFix AI</span>
+                    <p class="footer-tagline">Intelligent campus IT support</p>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4 class="footer-title">Product</h4>
+                        <ul class="footer-list">
+                            <li><a href="#features">Features</a></li>
+                            <li><a href="#how-it-works">How It Works</a></li>
+                            <li><a href="#chatbot-demo">IT Support</a></li>
+                            <li><a href="#" onclick="openChatbot(); return false;">Tickets</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h4 class="footer-title">Support</h4>
+                        <ul class="footer-list">
+                            <li><a href="#">Help Center</a></li>
+                            <li><a href="#faq">FAQs</a></li>
+                            <li><a href="#">Contact IT</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h4 class="footer-title">Resources</h4>
+                        <ul class="footer-list">
+                            <li><a href="#">Documentation</a></li>
+                            <li><a href="#">IT Policies</a></li>
+                            <li><a href="#">Troubleshooting</a></li>
+                            <li><a href="admin/login.html">Admin Login</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p class="footer-copyright">&copy; 2026 CampusFix AI. All rights reserved.</p>
+                <div class="footer-legal">
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Ticket Modal -->
+    <div class="modal" id="ticketModal">
+        <div class="modal-overlay" onclick="closeTicketModal()"></div>
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 class="modal-title">Create IT Support Ticket</h3>
+                <button class="modal-close" onclick="closeTicketModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="ticketForm" class="ticket-form">
+                    <div class="form-group">
+                        <label for="ticketIssue">Issue Summary</label>
+                        <input type="text" id="ticketIssue" class="form-input" placeholder="Brief description of the issue" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ticketCategory">Category</label>
+                        <select id="ticketCategory" class="form-select" required>
+                            <option value="">Select category...</option>
+                            <option value="wifi">Wi-Fi / Network</option>
+                            <option value="login">Login / Password</option>
+                            <option value="software">Software Issues</option>
+                            <option value="printer">Printer Problems</option>
+                            <option value="hardware">Hardware Issues</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ticketDescription">Description</label>
+                        <textarea id="ticketDescription" class="form-textarea" rows="4" placeholder="Detailed description of the problem" required></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ticketPriority">Priority</label>
+                            <select id="ticketPriority" class="form-select" required>
+                                <option value="low">Low</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="high">High</option>
+                                <option value="urgent">Urgent</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="ticketLocation">Location</label>
+                            <input type="text" id="ticketLocation" class="form-input" placeholder="Building / Room" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="closeTicketModal()">Cancel</button>
+                        <button type="submit" class="btn-primary">Create Ticket</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ticket Success Modal -->
+    <div class="modal" id="ticketSuccessModal">
+        <div class="modal-overlay" onclick="closeTicketSuccessModal()"></div>
+        <div class="modal-container modal-success">
+            <div class="modal-header">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+            </div>
+            <div class="modal-body">
+                <h3 class="success-title">Ticket Created Successfully!</h3>
+                <div class="ticket-details">
+                    <div class="detail-row">
+                        <span class="detail-label">Ticket ID:</span>
+                        <span class="detail-value" id="successTicketId">IT-2026-00421</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Status:</span>
+                        <span class="detail-value status-badge" id="successTicketStatus">Open</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Department:</span>
+                        <span class="detail-value" id="successDepartment">Network Support</span>
+                    </div>
+                </div>
+                <p class="success-message">Your ticket has been created and assigned to the appropriate IT team. You'll receive updates via email.</p>
+                <div class="form-actions">
+                    <button class="btn-secondary" onclick="closeTicketSuccessModal()">Close</button>
+                    <button class="btn-primary">View Ticket</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div class="auth-modal-overlay" id="authModalOverlay">
+        <div class="auth-modal">
+            <button class="auth-close" onclick="closeAuthModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <!-- User Type Selection Screen -->
+            <div class="auth-screen active" id="userTypeScreen">
+                <div class="auth-header">
+                    <div class="auth-logo">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h2 class="auth-title">Welcome to CampusFix AI</h2>
+                    <p class="auth-subtitle">Let's identify you first so we can provide personalized campus IT support.</p>
+                </div>
+                <div class="auth-body">
+                    <div class="auth-error"></div>
+                    <div class="auth-success"></div>
+                    
+                    <div class="user-type-selection">
+                        <div class="user-type-card" onclick="selectUserType('student')">
+                            <div class="user-type-icon">
+                                <i class="fas fa-user-graduate"></i>
+                            </div>
+                            <p class="user-type-label">Student</p>
+                        </div>
+                        <div class="user-type-card" onclick="selectUserType('employee')">
+                            <div class="user-type-icon">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <p class="user-type-label">Employee</p>
+                        </div>
+                    </div>
+                    
+                    <button class="auth-btn" id="userTypeContinueBtn" disabled onclick="continueFromUserType()">
+                        Continue
+                    </button>
+                </div>
+            </div>
+            
+            <!-- ID Input Screen -->
+            <div class="auth-screen" id="idInputScreen">
+                <div class="auth-header">
+                    <div class="auth-logo">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <h2 class="auth-title" id="idInputTitle">Enter Your ID</h2>
+                </div>
+                <div class="auth-body">
+                    <div class="auth-back" onclick="goBackToScreen('userType')">
+                        <i class="fas fa-arrow-left"></i>
+                        Back
+                    </div>
+                    
+                    <div class="auth-error"></div>
+                    <div class="auth-success"></div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" id="idInputLabel">ID</label>
+                        <input type="text" class="form-input" id="idInput" placeholder="Enter your ID" />
+                    </div>
+                    
+                    <button class="auth-btn" id="idCheckBtn" onclick="checkUser()">
+                        Continue
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Login Screen -->
+            <div class="auth-screen" id="loginScreen">
+                <div class="auth-header">
+                    <div class="auth-logo">
+                        <i class="fas fa-sign-in-alt"></i>
+                    </div>
+                    <h2 class="auth-title">Welcome Back!</h2>
+                    <p class="auth-subtitle">
+                        <span id="loginUserTypeDisplay">Student</span> · 
+                        <span id="loginIdDisplay"></span>
+                    </p>
+                </div>
+                <div class="auth-body">
+                    <div class="auth-back" onclick="goBackToScreen('idInput')">
+                        <i class="fas fa-arrow-left"></i>
+                        Back
+                    </div>
+                    
+                    <div class="auth-error"></div>
+                    <div class="auth-success"></div>
+                    
+                    <form onsubmit="handleLogin(event)">
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-input" id="loginPassword" placeholder="Enter your password" required />
+                        </div>
+                        
+                        <button type="submit" class="auth-btn" id="loginBtn">
+                            Login
+                        </button>
+                    </form>
+                    
+                    <div class="auth-info">
+                        <p class="auth-info-text">
+                            Don't have an account? 
+                            <a class="auth-info-link" onclick="goBackToScreen('idInput')">Create one</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Register Screen -->
+            <div class="auth-screen" id="registerScreen">
+                <div class="auth-header">
+                    <div class="auth-logo">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h2 class="auth-title">Create Your Account</h2>
+                    <p class="auth-subtitle">Join CampusFix AI to get started</p>
+                </div>
+                <div class="auth-body">
+                    <div class="auth-back" onclick="goBackToScreen('idInput')">
+                        <i class="fas fa-arrow-left"></i>
+                        Back
+                    </div>
+                    
+                    <div class="auth-error"></div>
+                    <div class="auth-success"></div>
+                    
+                    <form onsubmit="handleRegister(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">First Name</label>
+                                <input type="text" class="form-input" id="registerFirstName" placeholder="First name" required />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Last Name</label>
+                                <input type="text" class="form-input" id="registerLastName" placeholder="Last name" required />
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-input" id="registerEmail" placeholder="your.email@campus.edu" required />
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-input" id="registerPassword" placeholder="Create a password (min. 6 characters)" required />
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Confirm Password</label>
+                            <input type="password" class="form-input" id="registerConfirmPassword" placeholder="Confirm your password" required />
+                        </div>
+                        
+                        <button type="submit" class="auth-btn" id="registerBtn">
+                            Create Account
+                        </button>
+                    </form>
+                    
+                    <div class="auth-info">
+                        <p class="auth-info-text">
+                            Already have an account? 
+                            <a class="auth-info-link" onclick="goBackToScreen('idInput')">Login</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@15.0.7/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.4/dist/purify.min.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/mockAgent.js?v=20260828"></script>
+    <script src="js/chatbot.js"></script>
+    <script src="js/tickets.js"></script>
+</body>
+</html>

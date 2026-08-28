@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Auth Flow Diagnostic</title>
+    <style>
+        body { font-family: monospace; padding: 20px; max-width: 1200px; margin: 0 auto; }
+        .section { background: #f0f0f0; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .success { color: green; font-weight: bold; }
+        .error { color: red; font-weight: bold; }
+        .info { color: blue; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+        input { padding: 8px; margin: 5px; }
+        #log { white-space: pre-wrap; background: #fff; padding: 10px; margin-top: 10px; max-height: 400px; overflow-y: auto; border: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+    <h1>🔐 CampusFix AI - Authentication Flow Diagnostic</h1>
+    
+    <div class="section">
+        <h2>Step 1: Check Current State</h2>
+        <button onclick="checkState()">Check LocalStorage & Auth State</button>
+        <button onclick="clearAll()">Clear All Storage</button>
+    </div>
+    
+    <div class="section">
+        <h2>Step 2: Register/Login</h2>
+        <input type="text" id="email" placeholder="Email" value="test@example.com">
+        <input type="password" id="password" placeholder="Password" value="Test123!">
+        <br>
+        <button onclick="doRegister()">Register New User</button>
+        <button onclick="doLogin()">Login Existing User</button>
+    </div>
+    
+    <div class="section">
+        <h2>Step 3: Test Chat</h2>
+        <input type="text" id="chatMessage" placeholder="Message" value="Hello">
+        <button onclick="testChat()">Send Chat Message</button>
+    </div>
+    
+    <div class="section">
+        <h2>Diagnostic Log</h2>
+        <button onclick="clearLog()">Clear Log</button>
+        <div id="log"></div>
+    </div>
+    
+    <script>
+        const API_BASE_URL = 'http://localhost:5001/api';
+        
+        function log(msg, type = 'info') {
+            const logDiv = document.getElementById('log');
+            const className = type;
+            const timestamp = new Date().toLocaleTimeString();
+            logDiv.innerHTML += `<span class="${className}">[${timestamp}] ${msg}</span>\n`;
+            console.log(`[${timestamp}] ${msg}`);
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+        
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+        
+        function checkState() {
+            log('='.repeat(70), 'info');
+            log('CHECKING CURRENT STATE', 'info');
+            log('='.repeat(70), 'info');
+            
+            // Check localStorage
+            const token = localStorage.getItem('campusfix_token');
+            const userStr = localStorage.getItem('campusfix_user');
+            
+            log(`\nLocalStorage Keys: ${Object.keys(localStorage).join(', ')}`, 'info');
+            log(`\nToken exists: ${!!token}`, token ? 'success' : 'error');
+            
+            if (token) {
+                log(`Token length: ${token.length}`, 'info');
+                log(`Token starts with: ${token.substring(0, 20)}...`, 'info');
+            }
+            
+            log(`\nUser data exists: ${!!userStr}`, userStr ? 'success' : 'error');
+            
+            if (userStr) {
+                try {
+                    const user = JSON.parse(userStr);
+                    log(`User: ${user.firstName} ${user.lastName}`, 'success');
+                    log(`Email: ${user.email}`, 'info');
+                    log(`Type: ${user.usertype}`, 'info');
+                } catch (e) {
+                    log(`Failed to parse user data: ${e.message}`, 'error');
+                }
+            }
+            
+            log('\n' + '='.repeat(70), 'info');
+        }
+        
+        function clearAll() {
+            localStorage.clear();
+            sessionStorage.clear();
+            log('✓ All storage cleared', 'success');
+            checkState();
+        }
+        
+        async function doRegister() {
+            log('\n' + '='.repeat(70), 'info');
+            log('REGISTERING NEW USER', 'info');
+            log('='.repeat(70), 'info');
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const timestamp = Date.now();
+            
+            const payload = {
+                firstName: 'Test',
+                lastName: 'User',
+                email: `test${timestamp}@example.com`,
+                password: password,
+                usertype: 'student',
+                registration_number: `REG${timestamp}`
+            };
+            
+            log(`Email: ${payload.email}`, 'info');
+            log(`Sending to: ${API_BASE_URL}/auth/register`, 'info');
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                log(`\nResponse status: ${response.status}`, 'info');
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    log('✓ Registration successful!', 'success');
+                    log(`Token received: YES (length: ${data.token.length})`, 'success');
+                    log(`User data: ${data.user.firstName} ${data.user.lastName}`, 'success');
+                    
+                    // Store in localStorage (mimicking auth.js)
+                    localStorage.setItem('campusfix_token', data.token);
+                    localStorage.setItem('campusfix_user', JSON.stringify(data.user));
+                    
+                    log('\n✓ Token stored in localStorage with key: campusfix_token', 'success');
+                    log('✓ User stored in localStorage with key: campusfix_user', 'success');
+                    
+                    checkState();
+                } else {
+                    log(`✗ Registration failed: ${data.error}`, 'error');
+                }
+            } catch (error) {
+                log(`✗ Exception: ${error.message}`, 'error');
+            }
+        }
+        
+        async function doLogin() {
+            log('\n' + '='.repeat(70), 'info');
+            log('LOGGING IN', 'info');
+            log('='.repeat(70), 'info');
+            log('Note: Login requires existing user from previous registration', 'info');
+        }
+        
+        async function testChat() {
+            log('\n' + '='.repeat(70), 'info');
+            log('TESTING CHAT MESSAGE', 'info');
+            log('='.repeat(70), 'info');
+            
+            const message = document.getElementById('chatMessage').value;
+            const token = localStorage.getItem('campusfix_token');
+            
+            log(`Message: "${message}"`, 'info');
+            log(`Token exists: ${!!token}`, token ? 'success' : 'error');
+            
+            if (!token) {
+                log('✗ NO TOKEN FOUND! Please register first.', 'error');
+                return;
+            }
+            
+            log(`Token length: ${token.length}`, 'info');
+            log(`Sending to: ${API_BASE_URL}/chat/send`, 'info');
+            
+            const payload = {
+                message: message,
+                conversation_id: null,
+                state: {}
+            };
+            
+            log(`Payload: ${JSON.stringify(payload, null, 2)}`, 'info');
+            
+            try {
+                log('\nSending POST request...', 'info');
+                
+                const response = await fetch(`${API_BASE_URL}/chat/send`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(payload)
+                });
+                
+                log(`\nResponse status: ${response.status}`, 'info');
+                log(`Response ok: ${response.ok}`, response.ok ? 'success' : 'error');
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    log('\n✓✓✓ CHAT SUCCESSFUL! ✓✓✓', 'success');
+                    log(`Conversation ID: ${data.conversation_id}`, 'success');
+                    log(`Response has message: ${!!data.response?.message}`, 'success');
+                    
+                    if (data.response?.message) {
+                        log(`\nLLM Response:`, 'success');
+                        log(`"${data.response.message}"`, 'success');
+                        
+                        if (data.response.message.includes('Please login')) {
+                            log('\n✗✗✗ ERROR: Got "Please login" message!', 'error');
+                            log('This means the backend is rejecting the token', 'error');
+                        } else {
+                            log('\n✓ Real LLM response received!', 'success');
+                        }
+                    }
+                } else {
+                    log(`\n✗ Chat failed with status ${response.status}`, 'error');
+                    log(`Error: ${JSON.stringify(data)}`, 'error');
+                    
+                    if (response.status === 401) {
+                        log('\n✗ 401 Unauthorized - Token is invalid or expired', 'error');
+                    }
+                }
+            } catch (error) {
+                log(`\n✗ Exception: ${error.message}`, 'error');
+                log(`Stack: ${error.stack}`, 'error');
+            }
+        }
+        
+        // Auto-check state on load
+        window.addEventListener('load', () => {
+            log('Page loaded', 'info');
+            checkState();
+        });
+    </script>
+</body>
+</html>

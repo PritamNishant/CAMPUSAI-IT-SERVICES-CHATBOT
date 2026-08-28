@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CampusFix AI | IT Admin Portal</title>
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin-page">
+  <main class="admin-auth-shell">
+    <section class="admin-auth-card">
+      <a class="admin-brand" href="../index.html">CampusFix AI</a>
+      <p class="admin-eyebrow">IT ADMIN PORTAL</p>
+      <h1>Sign in to manage support</h1>
+      <form id="adminLoginForm">
+        <label>Email<input id="adminEmail" type="email" required autocomplete="email"></label>
+        <label>Password<input id="adminPassword" type="password" required autocomplete="current-password"></label>
+        <button class="admin-primary" type="submit">Sign In</button>
+      </form>
+      <button class="admin-link" id="showRegister" type="button">Create Admin Account</button>
+      <form id="adminRegisterForm" hidden>
+        <label>Name<input id="adminName" required></label>
+        <label>Registration Code<input id="adminCode" type="password" required></label>
+        <button class="admin-primary" type="submit">Create Account</button>
+      </form>
+      <p id="adminMessage" class="admin-message" role="alert"></p>
+    </section>
+  </main>
+  <script src="admin.js?v=20260828"></script>
+</body>
+</html>

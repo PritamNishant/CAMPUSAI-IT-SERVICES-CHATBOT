@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Isolated Chatbot Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        #log { white-space: pre-wrap; background: #f0f0f0; padding: 10px; margin: 10px 0; max-height: 400px; overflow-y: auto; }
+        button { padding: 10px 20px; margin: 5px; }
+        input { padding: 10px; width: 300px; }
+    </style>
+</head>
+<body>
+    <h1>Isolated Chatbot Test</h1>
+    <p>This simulates the EXACT chatbot.js flow</p>
+    
+    <div>
+        <button onclick="setupAuth()">1. Setup Auth (Register + Login)</button>
+        <button onclick="testChatMessage()">2. Test Chat Message</button>
+        <button onclick="clearLog()">Clear Log</button>
+    </div>
+    
+    <div>
+        <input type="text" id="testMessage" value="Hello" placeholder="Test message">
+    </div>
+    
+    <div id="log"></div>
+    
+    <!-- Load the ACTUAL scripts -->
+    <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/mockAgent.js"></script>
+    
+    <script>
+        function log(msg) {
+            const logDiv = document.getElementById('log');
+            logDiv.innerHTML += msg + '\n';
+            console.log(msg);
+        }
+        
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+        
+        async function setupAuth() {
+            log('Setting up auth...');
+            
+            try {
+                const response = await fetch('http://localhost:5001/api/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        firstName: 'Isolated',
+                        lastName: 'Test',
+                        email: `isolated${Date.now()}@test.com`,
+                        password: 'Test123!',
+                        usertype: 'student',
+                        registration_number: `REG${Date.now()}`
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    localStorage.setItem('campusfix_token', data.token);
+                    localStorage.setItem('campusfix_user', JSON.stringify(data.user));
+                    log(`✓ Auth setup complete`);
+                    log(`  Token stored in localStorage`);
+                    log(`  User: ${data.user.firstName}`);
+                } else {
+                    log(`✗ Auth failed: ${JSON.stringify(data)}`);
+                }
+            } catch (error) {
+                log(`✗ Exception: ${error.message}`);
+            }
+        }
+        
+        async function testChatMessage() {
+            log('\n--- Testing Chat Message ---');
+            
+            const message = document.getElementById('testMessage').value;
+            log(`Message: "${message}"`);
+            
+            // Check if sendMessageToAgent exists
+            if (typeof sendMessageToAgent !== 'function') {
+                log('✗ sendMessageToAgent is not defined!');
+                return;
+            }
+            
+            log('✓ sendMessageToAgent exists');
+            
+            // Check if token exists
+            const token = localStorage.getItem('campusfix_token');
+            if (!token) {
+                log('✗ No token in localStorage. Run step 1 first!');
+                return;
+            }
+            
+            log(`✓ Token exists (length: ${token.length})`);
+            
+            try {
+                log('\nCalling sendMessageToAgent...');
+                const response = await sendMessageToAgent(message);
+                
+                log('\n✓ Response received:');
+                log(`  Type: ${typeof response}`);
+                log(`  message: ${response.message ? 'EXISTS' : 'MISSING'}`);
+                log(`  quickReplies: ${response.quickReplies !== undefined ? 'EXISTS' : 'MISSING'}`);
+                log(`  suggestTicket: ${response.suggestTicket !== undefined ? 'EXISTS' : 'MISSING'}`);
+                
+                if (response.message) {
+                    log(`\n  Message content: ${response.message.substring(0, 100)}...`);
+                    
+                    if (response.message.includes("I'm having trouble connecting")) {
+                        log('\n✗✗✗ GOT THE ERROR MESSAGE! ✗✗✗');
+                        log('This means an exception was caught in sendMessageToAgent');
+                    } else {
+                        log('\n✓✓✓ GOT REAL LLM RESPONSE! ✓✓✓');
+                    }
+                }
+                
+            } catch (error) {
+                log(`\n✗ Exception in testChatMessage:`);
+                log(`  Type: ${error.constructor.name}`);
+                log(`  Message: ${error.message}`);
+                log(`  Stack: ${error.stack}`);
+            }
+        }
+    </script>
+</body>
+</html>

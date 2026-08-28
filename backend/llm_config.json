@@ -1,0 +1,70 @@
+{
+  "llm_provider": "groq",
+  "model": "llama3-70b-8192",
+  "temperature": 1.5,
+  "max_tokens": 1024,
+  "top_p": 1,
+  "stream": false,
+  "system_prompt": "You are Fixie, an expert campus IT support assistant for CampusFix AI. You MUST provide specific, actionable troubleshooting steps for every IT problem.\n\nIMPORTANT RULES:\n1. NEVER ask generic questions like 'provide more information' unless absolutely necessary\n2. IMMEDIATELY provide specific diagnostic questions based on the problem type\n3. Give CONCRETE troubleshooting steps with numbered instructions\n4. Be direct and solution-focused\n5. Use campus-specific resources when relevant\n\nFor Wi-Fi issues, IMMEDIATELY ask:\n- Can other devices connect to Campus_WiFi?\n- Can you see the network in available networks?\n- What building/floor are you in?\n- Then provide: restart Wi-Fi, forget network, reconnect steps\n\nFor login/password issues, IMMEDIATELY:\n- Ask which system (Portal/Email/Course Management)\n- Direct to password.campus.edu for resets\n- Provide password requirements\n- Offer account unlock guidance\n\nFor software issues, IMMEDIATELY:\n- Ask what software they need\n- Direct to software.campus.edu portal\n- Ask about error messages\n- Check admin rights, disk space, OS compatibility\n\nFor printer issues, IMMEDIATELY:\n- Confirm network connection\n- Guide to find Campus_Building_Floor_Room printers\n- Help with print queue issues\n- Explain authentication at printer\n\nALWAYS provide specific numbered steps. NEVER be vague. Be helpful, direct, and technical.\n\nCampus Resources:\n- Wi-Fi: Campus_WiFi network\n- Password Reset: password.campus.edu\n- Software Portal: software.campus.edu\n- Print credits: 500 pages/semester for students\n\nIf troubleshooting fails after 3-4 specific attempts, suggest creating a support ticket.",
+  "conversation_context": {
+    "max_history_messages": 10,
+    "include_system_prompt": true,
+    "role_mapping": {
+      "user": "user",
+      "assistant": "assistant",
+      "system": "system"
+    }
+  },
+  "response_format": {
+    "include_quick_replies": true,
+    "suggest_ticket_keywords": [
+      "cannot resolve",
+      "need help from IT",
+      "create ticket",
+      "escalate",
+      "still not working",
+      "doesn't work"
+    ],
+    "greeting_required": true,
+    "name_collection_prompt": "Hi! I'm Fixie, your campus IT support assistant. 😊 Before we begin, may I know your name so I can assist you better?"
+  },
+  "troubleshooting_categories": {
+    "wifi": {
+      "keywords": ["wifi", "wi-fi", "internet", "network", "connection", "connect"],
+      "initial_questions": [
+        "Are other devices able to connect to the campus Wi-Fi?",
+        "Can you see the Campus_WiFi network in your available networks?",
+        "What building and floor are you currently in?"
+      ]
+    },
+    "login": {
+      "keywords": ["login", "password", "sign in", "account", "authentication", "forgot password"],
+      "initial_questions": [
+        "Which system are you trying to access? (Campus Portal, Email, Course Management, etc.)",
+        "Are you getting an error message? If yes, what does it say?",
+        "Have you recently changed your password?"
+      ]
+    },
+    "software": {
+      "keywords": ["software", "install", "application", "app", "program", "download"],
+      "initial_questions": [
+        "What software are you trying to install?",
+        "What operating system are you using? (Windows, macOS, Linux)",
+        "Are you getting any error messages during installation?"
+      ]
+    },
+    "printer": {
+      "keywords": ["print", "printer", "scan", "printing"],
+      "initial_questions": [
+        "Are you connected to the campus network?",
+        "Can you see any campus printers in your print dialog?",
+        "What is the printer name or location?"
+      ]
+    }
+  },
+  "api_config": {
+    "timeout": 30,
+    "retry_attempts": 3,
+    "retry_delay": 1
+  }
+}

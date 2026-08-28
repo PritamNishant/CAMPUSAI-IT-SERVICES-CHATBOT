@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Frontend API</title>
+</head>
+<body>
+    <h1>Test CampusFix AI Frontend → Backend</h1>
+    
+    <div>
+        <h2>Step 1: Register/Login</h2>
+        <button onclick="testRegister()">Test Register</button>
+        <button onclick="testLogin()">Test Login</button>
+        <div id="authResult"></div>
+    </div>
+    
+    <div>
+        <h2>Step 2: Send Chat Message</h2>
+        <input type="text" id="messageInput" value="Hello" style="width: 300px;">
+        <button onclick="testChat()">Send Message</button>
+        <div id="chatResult"></div>
+    </div>
+    
+    <script>
+        const API_BASE_URL = 'http://localhost:5001/api';
+        let token = null;
+        
+        async function testRegister() {
+            const result = document.getElementById('authResult');
+            result.innerHTML = 'Testing registration...';
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/auth/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        firstName: 'Test',
+                        lastName: 'Frontend',
+                        email: `test_${Date.now()}@test.com`,
+                        password: 'Test123!',
+                        usertype: 'student',
+                        registration_number: `REG${Date.now()}`
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    token = data.token;
+                    result.innerHTML = `✅ Registration successful!<br>Token: ${token.substring(0, 20)}...`;
+                } else {
+                    result.innerHTML = `❌ Registration failed: ${JSON.stringify(data)}`;
+                }
+            } catch (error) {
+                result.innerHTML = `❌ Error: ${error.message}`;
+            }
+        }
+        
+        async function testLogin() {
+            const result = document.getElementById('authResult');
+            result.innerHTML = 'Testing login...';
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        usertype: 'student',
+                        id: 'REG1735352639',
+                        password: 'Test123!'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    token = data.token;
+                    result.innerHTML = `✅ Login successful!<br>Token: ${token.substring(0, 20)}...`;
+                } else {
+                    result.innerHTML = `❌ Login failed: ${JSON.stringify(data)}`;
+                }
+            } catch (error) {
+                result.innerHTML = `❌ Error: ${error.message}`;
+            }
+        }
+        
+        async function testChat() {
+            const result = document.getElementById('chatResult');
+            const message = document.getElementById('messageInput').value;
+            
+            if (!token) {
+                result.innerHTML = '❌ Please register/login first!';
+                return;
+            }
+            
+            result.innerHTML = 'Sending message...';
+            
+            try {
+                console.log('Sending to:', `${API_BASE_URL}/chat/send`);
+                console.log('Token:', token.substring(0, 20) + '...');
+                console.log('Message:', message);
+                
+                const response = await fetch(`${API_BASE_URL}/chat/send`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        conversation_id: null,
+                        state: {}
+                    })
+                });
+                
+                console.log('Response status:', response.status);
+                console.log('Response ok:', response.ok);
+                
+                const data = await response.json();
+                console.log('Response data:', data);
+                
+                if (response.ok) {
+                    result.innerHTML = `
+                        ✅ Chat successful!<br>
+                        <strong>Response:</strong><br>
+                        ${data.response.message}<br><br>
+                        <strong>Model:</strong> ${data.response.model}<br>
+                        <strong>Conversation ID:</strong> ${data.conversation_id}
+                    `;
+                } else {
+                    result.innerHTML = `❌ Chat failed: ${JSON.stringify(data)}`;
+                }
+            } catch (error) {
+                console.error('Chat error:', error);
+                result.innerHTML = `❌ Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
